@@ -1,0 +1,949 @@
+{
+  "type": "base",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "b12cf8ee-e9a2-4ea4-8deb-e1f6cff4ad20",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "footprints": [
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "users"
+      ],
+      "writes": [
+        "s|tbl|public.users",
+        "n|tbl|public.users",
+        "e|tbl|public.users",
+        "n|rel|public.users",
+        "n|type|public.users",
+        "n|rel|public.users_pkey",
+        "n|rel|public.users_email_key"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "categoria_producto"
+      ],
+      "writes": [
+        "s|tbl|public.categoria_producto",
+        "n|tbl|public.categoria_producto",
+        "e|tbl|public.categoria_producto",
+        "n|rel|public.categoria_producto",
+        "n|type|public.categoria_producto",
+        "n|rel|public.categoria_producto_pkey",
+        "n|rel|public.categoria_producto_descripcion_key"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "categorias_vendedor"
+      ],
+      "writes": [
+        "s|tbl|public.categorias_vendedor",
+        "n|tbl|public.categorias_vendedor",
+        "e|tbl|public.categorias_vendedor",
+        "n|rel|public.categorias_vendedor",
+        "n|type|public.categorias_vendedor",
+        "n|rel|public.categorias_vendedor_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "producto_categoria"
+      ],
+      "writes": [
+        "s|tbl|public.producto_categoria",
+        "n|tbl|public.producto_categoria",
+        "e|tbl|public.producto_categoria",
+        "n|rel|public.producto_categoria",
+        "n|type|public.producto_categoria",
+        "n|rel|public.producto_categoria_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "productos"
+      ],
+      "writes": [
+        "s|tbl|public.productos",
+        "n|tbl|public.productos",
+        "e|tbl|public.productos",
+        "n|rel|public.productos",
+        "n|type|public.productos",
+        "n|rel|public.productos_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "tianguis"
+      ],
+      "writes": [
+        "s|tbl|public.tianguis",
+        "n|tbl|public.tianguis",
+        "e|tbl|public.tianguis",
+        "n|rel|public.tianguis",
+        "n|type|public.tianguis",
+        "n|rel|public.tianguis_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "vendedor_categoriasVendedor"
+      ],
+      "writes": [
+        "s|tbl|public.vendedor_categoriasVendedor",
+        "n|tbl|public.vendedor_categoriasVendedor",
+        "e|tbl|public.vendedor_categoriasVendedor",
+        "n|rel|public.vendedor_categoriasVendedor",
+        "n|type|public.vendedor_categoriasVendedor",
+        "n|rel|public.vendedor_categoriasVendedor_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "vendedores"
+      ],
+      "writes": [
+        "s|tbl|public.vendedores",
+        "n|tbl|public.vendedores",
+        "e|tbl|public.vendedores",
+        "n|rel|public.vendedores",
+        "n|type|public.vendedores",
+        "n|rel|public.vendedores_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "producto_categoria"
+      ],
+      "writes": [
+        "s|fk|public.producto_categoria.producto_categoria_id_producto_productos_id_fkey",
+        "n|fk|public.producto_categoria.producto_categoria_id_producto_productos_id_fkey",
+        "e|fk|public.producto_categoria.producto_categoria_id_producto_productos_id_fkey",
+        "n|con|public.producto_categoria.producto_categoria_id_producto_productos_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.producto_categoria",
+        "n|sch|public",
+        "n|tbl|public.productos",
+        "n|sch|public",
+        "n|col|public.producto_categoria.id_producto",
+        "n|col|public.productos.id",
+        "e|uniqueness|public.productos.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "producto_categoria"
+      ],
+      "writes": [
+        "s|fk|public.producto_categoria.producto_categoria_YZnH5FXvTj2O_fkey",
+        "n|fk|public.producto_categoria.producto_categoria_YZnH5FXvTj2O_fkey",
+        "e|fk|public.producto_categoria.producto_categoria_YZnH5FXvTj2O_fkey",
+        "n|con|public.producto_categoria.producto_categoria_YZnH5FXvTj2O_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.producto_categoria",
+        "n|sch|public",
+        "n|tbl|public.categoria_producto",
+        "n|sch|public",
+        "n|col|public.producto_categoria.id_categoria_producto",
+        "n|col|public.categoria_producto.id",
+        "e|uniqueness|public.categoria_producto.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "vendedor_categoriasVendedor"
+      ],
+      "writes": [
+        "s|fk|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_id_vendedores_vendedores_id_fkey",
+        "n|fk|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_id_vendedores_vendedores_id_fkey",
+        "e|fk|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_id_vendedores_vendedores_id_fkey",
+        "n|con|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_id_vendedores_vendedores_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.vendedor_categoriasVendedor",
+        "n|sch|public",
+        "n|tbl|public.vendedores",
+        "n|sch|public",
+        "n|col|public.vendedor_categoriasVendedor.id_vendedores",
+        "n|col|public.vendedores.id",
+        "e|uniqueness|public.vendedores.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "vendedor_categoriasVendedor"
+      ],
+      "writes": [
+        "s|fk|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_NRqIfDolveYT_fkey",
+        "n|fk|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_NRqIfDolveYT_fkey",
+        "e|fk|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_NRqIfDolveYT_fkey",
+        "n|con|public.vendedor_categoriasVendedor.vendedor_categoriasVendedor_NRqIfDolveYT_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.vendedor_categoriasVendedor",
+        "n|sch|public",
+        "n|tbl|public.categorias_vendedor",
+        "n|sch|public",
+        "n|col|public.vendedor_categoriasVendedor.id_categorias_vendedor",
+        "n|col|public.categorias_vendedor.id",
+        "e|uniqueness|public.categorias_vendedor.id"
+      ]
+    }
+  ],
+  "ddl": [
+    {
+      "schema": "public",
+      "name": "users",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "categoria_producto",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "categorias_vendedor",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "producto_categoria",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "productos",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "tianguis",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "vendedor_categoriasVendedor",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "vendedores",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "users_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "name",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "age",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "email",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "categoria_producto",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "categoria_producto_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "categoria_producto",
+      "name": "nombre",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "categoria_producto",
+      "name": "descripcion",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "categorias_vendedor",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "categorias_vendedor_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "categorias_vendedor",
+      "name": "nombre",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "categorias_vendedor",
+      "name": "descripcion",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "producto_categoria",
+      "name": "id_producto",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "producto_categoria",
+      "name": "id_categoria_producto",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "productos",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "productos_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "productos",
+      "name": "imgUrl",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "productos",
+      "name": "nombre",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "tianguis_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "alcaldia",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "colonia",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "ubicacion",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "giro",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "dia",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "horario",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "latitud",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "longitud",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedor_categoriasVendedor",
+      "name": "id_vendedores",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedor_categoriasVendedor",
+      "name": "id_categorias_vendedor",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "vendedores_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "nombre",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "isValidated",
+      "type": "boolean",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "vendedor",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "email",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "password",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "producto_categoria",
+      "name": "producto_categoria_id_producto_productos_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "id_producto"
+      ],
+      "schemaTo": "public",
+      "tableTo": "productos",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "producto_categoria",
+      "name": "producto_categoria_YZnH5FXvTj2O_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "id_categoria_producto"
+      ],
+      "schemaTo": "public",
+      "tableTo": "categoria_producto",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "vendedor_categoriasVendedor",
+      "name": "vendedor_categoriasVendedor_id_vendedores_vendedores_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "id_vendedores"
+      ],
+      "schemaTo": "public",
+      "tableTo": "vendedores",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "vendedor_categoriasVendedor",
+      "name": "vendedor_categoriasVendedor_NRqIfDolveYT_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "id_categorias_vendedor"
+      ],
+      "schemaTo": "public",
+      "tableTo": "categorias_vendedor",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "producto_categoria",
+      "name": "producto_categoria_pkey",
+      "columns": [
+        "id_producto",
+        "id_categoria_producto"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "vendedor_categoriasVendedor",
+      "name": "vendedor_categoriasVendedor_pkey",
+      "columns": [
+        "id_vendedores",
+        "id_categorias_vendedor"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "users_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "categoria_producto",
+      "name": "categoria_producto_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "categorias_vendedor",
+      "name": "categorias_vendedor_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "productos",
+      "name": "productos_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "tianguis",
+      "name": "tianguis_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "vendedores",
+      "name": "vendedores_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "users",
+      "name": "users_email_key",
+      "nameExplicit": false,
+      "columns": [
+        "email"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
+      "table": "categoria_producto",
+      "name": "categoria_producto_descripcion_key",
+      "nameExplicit": false,
+      "columns": [
+        "descripcion"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    }
+  ]
+}
