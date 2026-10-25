@@ -13,7 +13,11 @@ import {
 
 export default function Landing() {
     const [token, setToken] = useState(() => localStorage.getItem("token"));
-    const [negocios, setNegocios] = useState([]);
+    const [negocios, setNegocios] = useState([
+        { hola: "hola" },
+        { hola: "hola" },
+        { hola: "hola" },
+    ]);
     const [mio, setMio] = useState(null);
 
     const [vista, setVista] = useState("lista");
@@ -28,8 +32,8 @@ export default function Landing() {
     useEffect(() => {
         const loadLocals = async () => {
             try {
-                const { data } = await fetchLocals();
-                setNegocios(data);
+                //const { data } = await fetchLocals();
+                //setNegocios(data);
             } catch (error) {
                 setMsg("Error cargando establecimientos.");
             }

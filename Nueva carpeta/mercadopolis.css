@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap');
+/* 1. TOKENS ---------------------------------------------------------------- */
+:root{
+  color-scheme:light;
+  /* Marca (cambia solo estas líneas) */
+  --brand-azalea:#A83278;
+  --brand-vivid:#8F00FF;
+  --brand-deep:#4B0082;
+  --brand-pink-vivid:#D6007A;
+  --brand-pink-medium:#F06FAE;
+  /* Neutros */
+  --color-white:#FFFFFF;
+  --color-bg:#F8F6FB;
+  --color-bg-alt:#F0EAF7;
+  --color-text:#241A2D;
+  --color-text-muted:#62586B;
+  --color-border:#E4DCEB;
+  --color-border-strong:#7A6F85;
+  --color-success:#287A52;
+  /* Roles */
+  --color-heading:var(--brand-deep);
+  --color-primary:var(--brand-vivid);
+  --color-primary-hover:color-mix(in srgb,var(--brand-vivid) 85%,#000);
+  --color-primary-active:color-mix(in srgb,var(--brand-vivid) 70%,#000);
+  --color-primary-soft:color-mix(in srgb,var(--brand-vivid) 10%,#fff);
+  --color-highlight:var(--brand-pink-vivid);
+  --color-success-soft:color-mix(in srgb,var(--color-success) 8%,#fff);
+  /* Tipografía */
+  --font-sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-serif:Lora,Georgia,"Times New Roman",serif;
+  --text-sm:.9375rem;--text-base:1rem;--text-lg:1.125rem;--text-xl:1.375rem;--text-2xl:1.75rem;
+  /* Espaciado, forma, elevación */
+  --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.5rem;--space-6:2rem;
+  --radius-sm:.5rem;--radius-md:.75rem;--radius-lg:1rem;--radius-pill:999px;
+  --shadow-sm:0 1px 2px rgb(36 26 45 / .08);
+  --shadow-md:0 3px 10px rgb(36 26 45 / .16);
+  --shadow-lg:0 8px 24px rgb(36 26 45 / .18);
+  --touch-min:2.75rem;
+  --z-chat:100;
+  --transition-fast:120ms ease;
+}
+@media (prefers-reduced-motion:reduce){:root{--transition-fast:0s}}
+
+/* 2. BASE ------------------------------------------------------------------ */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font:400 var(--text-base)/1.6 var(--font-sans);color:var(--color-text);background:var(--color-bg);overflow-wrap:break-word}
+::selection{background:var(--brand-pink-medium);color:var(--color-text)}
+:focus-visible{outline:3px solid var(--color-primary);outline-offset:2px}
+p{margin:0 0 var(--space-2)}
+h1,h2,h3,h4{line-height:1.25}
+h2,h3,h4{margin:0 0 var(--space-1);color:var(--color-heading)}
+h2{font-size:var(--text-xl)}
+h3{font:700 var(--text-lg)/1.25 var(--font-serif)}
+h4{font-size:var(--text-base)}
+
+/* 3. LAYOUT (misma estructura: mapa fijo a la derecha, contenido a la izquierda) */
+.layout{display:flex;flex-direction:row-reverse;min-height:100vh}
+#mapa-panel{width:50%;height:100vh;position:sticky;top:0;align-self:flex-start;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--color-bg-alt);border-left:4px solid var(--color-primary)}
+#mapa-panel img{width:100%;height:100%;object-fit:cover}
+#mapa-panel p{margin:0}
+.contenido{width:50%;min-width:0;display:flex;flex-direction:column}
+#app{flex:1;padding:var(--space-4)}
+@media (max-width:800px){
+  .layout{flex-direction:column}
+  #mapa-panel{width:100%;height:40vh;position:static;border-left:0;border-bottom:4px solid var(--color-primary)}
+  .contenido{width:100%}
+}
+
+/* 4. ENCABEZADO Y PIE ------------------------------------------------------ */
+h1{display:flex;align-items:center;gap:var(--space-3);margin:0;padding:var(--space-3) var(--space-4);background:var(--color-heading);color:var(--color-white);font:700 var(--text-2xl)/1.25 var(--font-serif)}
+h1::before{content:"";flex:none;width:1.75rem;height:1.75rem;border:3px solid var(--color-white);border-radius:50%;background:var(--brand-azalea)}
+footer{margin-top:var(--space-5);padding:var(--space-5) var(--space-4) 5rem;background:var(--color-heading);color:var(--color-white)}
+footer h3{margin:0 0 var(--space-1);color:var(--color-white)}
+footer h4{margin:0;color:var(--color-border);font-weight:400}
+
+/* 5. BOTONES --------------------------------------------------------------- */
+button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--touch-min);padding:var(--space-2) var(--space-4);border:2px solid var(--color-primary);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-primary);font:inherit;font-weight:700;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer;transition:background-color var(--transition-fast),border-color var(--transition-fast)}
+button:hover,.btn:hover{background:var(--color-primary-soft);border-color:var(--color-primary-hover);color:var(--color-primary-hover)}
+button:active,.btn:active{background:color-mix(in srgb,var(--brand-vivid) 20%,#fff)}
+a.btn{margin-top:var(--space-2)}
+.btn--primary{background:var(--color-primary);color:var(--color-white)}
+.btn--primary:hover{background:var(--color-primary-hover);color:var(--color-white)}
+.btn--primary:active{background:var(--color-primary-active)}
+
+.nav{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-3)}
+.nav button[aria-current="page"]{background:var(--color-heading);border-color:var(--color-heading);color:var(--color-white);box-shadow:inset 0 -4px 0 var(--brand-pink-medium)}
+
+#chat-icono{position:fixed;right:var(--space-4);bottom:var(--space-4);z-index:var(--z-chat);min-height:3rem;padding:0 var(--space-4);border:2px solid var(--color-white);border-radius:var(--radius-pill);background:var(--color-primary);color:var(--color-white);box-shadow:var(--shadow-lg)}
+#chat-icono:hover,#chat-icono:active{background:var(--color-primary-hover);border-color:var(--color-white);color:var(--color-white)}
+#chat-icono:focus-visible{outline-color:var(--color-heading)}
+
+/* 6. FORMULARIOS ----------------------------------------------------------- */
+input[type=text],input[type=password],input[type=number],select,textarea{display:block;width:100%;min-height:var(--touch-min);margin-bottom:var(--space-2);padding:var(--space-2) var(--space-3);border:2px solid var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-text);font:inherit}
+input[type=text]:hover,input[type=password]:hover,input[type=number]:hover,select:hover,textarea:hover{border-color:var(--color-heading)}
+::placeholder{color:var(--color-text-muted);opacity:1}
+label{display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-min);cursor:pointer}
+input[type=checkbox]{flex:none;width:1.25rem;height:1.25rem;margin:0;accent-color:var(--color-primary)}
+
+/* 7. TARJETAS, ETIQUETAS Y MENSAJES ---------------------------------------- */
+.card{margin-bottom:var(--space-3);padding:var(--space-4);border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);box-shadow:var(--shadow-sm);transition:border-color var(--transition-fast),box-shadow var(--transition-fast)}
+.card>div{margin-top:var(--space-2)}
+.card>p{margin:var(--space-2) 0 0}
+.click{cursor:pointer}
+.click:hover{border-color:var(--color-primary);box-shadow:var(--shadow-md)}
+.item{display:flex;justify-content:space-between;gap:var(--space-3);padding:var(--space-2) 0;border-top:1px solid var(--color-border)}
+.item:first-child{border-top:0}
+.item b{color:var(--color-heading)}
+.mut{color:var(--color-text-muted);font-size:var(--text-sm)}
+
+.estado{display:inline-flex;align-items:center;min-height:1.75rem;padding:0 var(--space-3);border:2px solid;border-radius:var(--radius-pill);font-size:var(--text-sm);font-weight:700}
+.estado--abierto{background:var(--color-success-soft);border-color:var(--color-success);color:var(--color-success)}
+.estado--cerrado{background:var(--color-bg-alt);border-color:var(--color-border-strong);color:var(--color-text-muted)}
+.chip{display:inline-flex;align-items:center;min-height:1.75rem;margin:0 var(--space-1) var(--space-1) 0;padding:0 var(--space-3);border-radius:var(--radius-pill);background:var(--color-primary-soft);color:var(--color-heading);font-size:var(--text-sm);font-weight:700}
+
+#aviso{margin:0 0 var(--space-3)}
+#aviso:empty{margin:0}
+#aviso:not(:empty){padding:var(--space-3) var(--space-4);border:2px solid var(--color-border);border-left:6px solid var(--color-primary);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-text)}
+textarea{font:inherit;resize:vertical}
+.alerta{margin-bottom:var(--space-3);padding:var(--space-3) var(--space-4);border:2px solid #B45309;border-left-width:6px;border-radius:var(--radius-md);background:#FFF4E5;color:var(--color-text)}
+.bajo{color:#B3261E;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3)}
+.stats>div{margin:0}
+.stats b{display:block;font:700 var(--text-xl)/1.2 var(--font-serif);color:var(--color-heading)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--space-2)}
+.chips label{min-height:var(--touch-min);padding:0 var(--space-3);border:2px solid var(--color-border);border-radius:var(--radius-pill)}
+.card svg{display:block;color:var(--color-primary)}
+.item .mut{margin-top:0}
