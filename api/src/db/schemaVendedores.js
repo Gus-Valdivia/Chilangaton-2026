@@ -5,4 +5,7 @@ export const vendedoresTable = pgTable("vendedores", {
   nombre: varchar({ length: 255 }).notNull(),
   isValidated: boolean().notNull(),
   vendedor: varchar({ length: 255 }).notNull(),
+  email: varchar({ length: 255 }).notNull(),
+  password: varchar({ length: 255 }).notNull(),
 });
+  
