@@ -1,12 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { VendedorProvider } from "./context/VendedorContext";
 
 function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route />
-            </Routes>
-        </BrowserRouter>
+        <VendedorProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route />
+                </Routes>
+            </BrowserRouter>
+        </VendedorProvider>
     );
 }
 
