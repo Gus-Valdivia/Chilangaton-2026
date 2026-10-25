@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      - POSTGRES_DB=hackathon
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=drizzle
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:z
+  api:
+    build: ./api
+    env_file:
+      - ./api/.env
+    ports:
+      - "3000:3000"
+    healthcheck:
+      # test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./api:/app:z
+      - api_node_modules:/app/node_modules
+  web:
+    build: ./web
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    volumes:
+      - ./web:/app:z
+      - web_node_modules:/app/node_modules
+
+volumes:
+  postgres_data:
+  api_node_modules:
+  web_node_modules:
