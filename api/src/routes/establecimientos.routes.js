@@ -3,7 +3,7 @@ import { Router } from "express";
 const router = Router();
 
 router.get("/get-tianguis"); // Tianguis[]
-router.get("/get-locals"); // Vendedores[], Productos[],
-router.get("/get-locals-unregistered"); // (id producto) Vendedores[]
+router.get("/get-mercados");
+router.get("/get-locals"); // (tianguis|mercado) Vendedores[], Productos[]
 
 export default router;
