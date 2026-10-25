@@ -1,772 +1,326 @@
-<!doctype html>
-<html lang="es-MX">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Directorio de tianguis de la CDMX</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap">
-  <!-- Si usas Leaflet, enlaza aquí su CSS ANTES del bloque <style> -->
-  <style>
-/* ==========================================================================
-   Tianguis CDMX · estilos
-   1 Tokens · 2 Base · 3 Botones y formularios · 4 Filtros desplegables y etiquetas
-   5 Encabezado · 6 Sidebar y tarjetas · 7 Mapa y marcadores · 8 Layout
-   9 Integración con Leaflet (opcional)
-   Metodología: BEM (bloque__elemento--modificador). Sin !important.
-   ========================================================================== */
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercadopolis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
 /* 1. TOKENS ---------------------------------------------------------------- */
-:root {
-  /* Marca (propuesta inicial: cambia solo estas líneas) */
-  --brand-azalea: #A83278;
-  --brand-vivid: #8F00FF;
-  --brand-deep: #4B0082;
-  --brand-pink-vivid: #D6007A;   /* valor propuesto: 5.1:1 sobre blanco */
-  --brand-pink-medium: #F06FAE;  /* solo rellenos; con texto oscuro encima (6:1) */
-
+:root{
+  color-scheme:light;
+  /* Marca (cambia solo estas líneas) */
+  --brand-azalea:#A83278;
+  --brand-vivid:#8F00FF;
+  --brand-deep:#4B0082;
+  --brand-pink-vivid:#D6007A;
+  --brand-pink-medium:#F06FAE;
   /* Neutros */
-  --color-white: #FFFFFF;
-  --color-bg: #F8F6FB;
-  --color-bg-alt: #F0EAF7;
-  --color-text: #241A2D;
-  --color-text-muted: #62586B;
-  --color-border: #E4DCEB;         /* decorativo: separa tarjetas */
-  --color-border-strong: #7A6F85;  /* controles: 4.7:1 sobre blanco (WCAG 1.4.11) */
-
-  /* Estado */
-  --color-success: #287A52;
-  --color-warning: #946200;
-  --color-error: #B42336;
-  --color-error-bg: #FBEBED;
-
-  /* Roles derivados de la marca */
-  --color-heading: var(--brand-deep);
-  --color-accent: var(--brand-azalea);
-  --color-accent-soft: color-mix(in srgb, var(--brand-azalea) 10%, #fff);
-  --color-highlight: var(--brand-pink-vivid);
-  --color-highlight-soft: color-mix(in srgb, var(--brand-pink-medium) 16%, #fff);
-  --color-primary: var(--brand-vivid);
-  --color-primary-hover: color-mix(in srgb, var(--brand-vivid) 85%, #000);
-  --color-primary-active: color-mix(in srgb, var(--brand-vivid) 70%, #000);
-  --color-primary-soft: color-mix(in srgb, var(--brand-vivid) 10%, #fff);
-  --color-focus: var(--brand-vivid);
-
+  --color-white:#FFFFFF;
+  --color-bg:#F8F6FB;
+  --color-bg-alt:#F0EAF7;
+  --color-text:#241A2D;
+  --color-text-muted:#62586B;
+  --color-border:#E4DCEB;
+  --color-border-strong:#7A6F85;
+  --color-success:#287A52;
+  /* Roles */
+  --color-heading:var(--brand-deep);
+  --color-primary:var(--brand-vivid);
+  --color-primary-hover:color-mix(in srgb,var(--brand-vivid) 85%,#000);
+  --color-primary-active:color-mix(in srgb,var(--brand-vivid) 70%,#000);
+  --color-primary-soft:color-mix(in srgb,var(--brand-vivid) 10%,#fff);
+  --color-highlight:var(--brand-pink-vivid);
+  --color-success-soft:color-mix(in srgb,var(--color-success) 8%,#fff);
   /* Tipografía */
-  --font-sans: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-serif: Lora, Georgia, "Times New Roman", serif;
-  --text-sm: 0.9375rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.375rem;
-  --text-2xl: 1.75rem;
-  --leading-tight: 1.25;
-  --leading-base: 1.6;
-  --weight-regular: 400;
-  --weight-semibold: 600;
-  --weight-bold: 700;
-
-  /* Espaciado (base 4 px) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-
-  /* Forma y elevación */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-pill: 999px;
-  --shadow-sm: 0 1px 2px rgb(36 26 45 / 0.08);
-  --shadow-md: 0 3px 10px rgb(36 26 45 / 0.16);
-  --shadow-lg: 0 8px 24px rgb(36 26 45 / 0.18);
-
-  /* Dimensiones */
-  --sidebar-w: 24rem;
-  --header-h: 4.5rem;          /* incluye la franja inferior de 4 px */
-  --touch-min: 2.75rem;        /* 44 px */
-  --map-h-mobile: 55svh;
-
-  /* Capas (Leaflet usa 400-1000 internamente) */
-  --z-map-ui: 800;
-  --z-dropdown: 900;
-  --z-header: 1100;
-  --z-modal: 1200;
-  --z-skip: 1300;
-
-  /* Movimiento y estados */
-  --transition-fast: 120ms ease;
-  --transition-base: 200ms ease;
-  --hover-scale: 1.1;
-  --focus-width: 3px;
-  --focus-offset: 2px;
-
-  /* Puntos de quiebre: referencia, var() no funciona dentro de @media.
-     md = 48rem (tableta) · lg = 64rem (escritorio) */
+  --font-sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-serif:Lora,Georgia,"Times New Roman",serif;
+  --text-sm:.9375rem;--text-base:1rem;--text-lg:1.125rem;--text-xl:1.375rem;--text-2xl:1.75rem;
+  /* Espaciado, forma, elevación */
+  --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.5rem;--space-6:2rem;
+  --radius-sm:.5rem;--radius-md:.75rem;--radius-lg:1rem;--radius-pill:999px;
+  --shadow-sm:0 1px 2px rgb(36 26 45 / .08);
+  --shadow-md:0 3px 10px rgb(36 26 45 / .16);
+  --shadow-lg:0 8px 24px rgb(36 26 45 / .18);
+  --touch-min:2.75rem;
+  --z-chat:100;
+  --transition-fast:120ms ease;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --transition-fast: 0s;
-    --transition-base: 0s;
-    --hover-scale: 1;
-  }
-}
+@media (prefers-reduced-motion:reduce){:root{--transition-fast:0s}}
 
 /* 2. BASE ------------------------------------------------------------------ */
-*, *::before, *::after { box-sizing: border-box; }
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font:400 var(--text-base)/1.6 var(--font-sans);color:var(--color-text);background:var(--color-bg);overflow-wrap:break-word}
+::selection{background:var(--brand-pink-medium);color:var(--color-text)}
+:focus-visible{outline:3px solid var(--color-primary);outline-offset:2px}
+p{margin:0 0 var(--space-2)}
+h1,h2,h3,h4{line-height:1.25}
+h2,h3,h4{margin:0 0 var(--space-1);color:var(--color-heading)}
+h2{font-size:var(--text-xl)}
+h3{font:700 var(--text-lg)/1.25 var(--font-serif)}
+h4{font-size:var(--text-base)}
 
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--header-h); }
-
-body {
-  margin: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  font-weight: var(--weight-regular);
-  line-height: var(--leading-base);
-  color: var(--color-text);
-  background: var(--color-bg);
-  overflow-wrap: break-word;
-}
-
-h1, h2, h3, h4 {
-  margin: 0;
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-tight);
-  color: var(--color-heading);
-}
-h1 { font-size: var(--text-2xl); }
-h2 { font-size: var(--text-xl); }
-h3 { font-size: var(--text-lg); }
-h4 { font-size: var(--text-base); }
-
-p, dl, dd, ul { margin: 0; }
-ul { padding: 0; list-style: none; }
-img, svg { max-width: 100%; }
-
-a { color: var(--color-primary); text-underline-offset: 0.2em; }
-a:hover { color: var(--color-primary-hover); }
-
-:focus-visible {
-  outline: var(--focus-width) solid var(--color-focus);
-  outline-offset: var(--focus-offset);
+/* 3. LAYOUT (misma estructura: mapa fijo a la derecha, contenido a la izquierda) */
+.layout{display:flex;flex-direction:row-reverse;min-height:100vh}
+#mapa-panel{width:50%;height:100vh;position:sticky;top:0;align-self:flex-start;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--color-bg-alt);border-left:4px solid var(--color-primary)}
+#mapa-panel img{width:100%;height:100%;object-fit:cover}
+#mapa-panel p{margin:0}
+.contenido{width:50%;min-width:0;display:flex;flex-direction:column}
+#app{flex:1;padding:var(--space-4)}
+@media (max-width:800px){
+  .layout{flex-direction:column}
+  #mapa-panel{width:100%;height:40vh;position:static;border-left:0;border-bottom:4px solid var(--color-primary)}
+  .contenido{width:100%}
 }
 
-.skip-link {
-  position: absolute;
-  top: -4rem;
-  left: var(--space-2);
-  z-index: var(--z-skip);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--color-heading);
-  color: var(--color-white);
-  font-weight: var(--weight-bold);
-}
-.skip-link:focus { top: var(--space-2); color: var(--color-white); }
+/* 4. ENCABEZADO Y PIE ------------------------------------------------------ */
+h1{display:flex;align-items:center;gap:var(--space-3);margin:0;padding:var(--space-3) var(--space-4);background:var(--color-heading);border-bottom:4px solid var(--color-highlight);color:var(--color-white);font:700 var(--text-2xl)/1.25 var(--font-serif)}
+h1::before{content:"";flex:none;width:1.75rem;height:1.75rem;border:3px solid var(--color-white);border-radius:50%;background:var(--brand-azalea)}
+footer{margin-top:var(--space-5);padding:var(--space-5) var(--space-4) 5rem;background:var(--color-heading);border-top:4px solid var(--color-highlight);color:var(--color-white)}
+footer h3{margin:0 0 var(--space-1);color:var(--color-white)}
+footer h4{margin:0;color:var(--color-border);font-weight:400}
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
+/* 5. BOTONES --------------------------------------------------------------- */
+button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--touch-min);padding:var(--space-2) var(--space-4);border:2px solid var(--color-primary);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-primary);font:inherit;font-weight:700;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer;transition:background-color var(--transition-fast),border-color var(--transition-fast)}
+button:hover,.btn:hover{background:var(--color-primary-soft);border-color:var(--color-primary-hover);color:var(--color-primary-hover)}
+button:active,.btn:active{background:color-mix(in srgb,var(--brand-vivid) 20%,#fff)}
+a.btn{margin-top:var(--space-2)}
+.btn--primary{background:var(--color-primary);color:var(--color-white)}
+.btn--primary:hover{background:var(--color-primary-hover);color:var(--color-white)}
+.btn--primary:active{background:var(--color-primary-active)}
 
-/* 3. BOTONES Y FORMULARIOS ------------------------------------------------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: var(--touch-min);
-  padding: var(--space-2) var(--space-4);
-  border: 2px solid transparent;
-  border-radius: var(--radius-md);
-  font: inherit;
-  font-weight: var(--weight-bold);
-  line-height: 1.2;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
-}
-.btn--primary { background: var(--color-primary); color: var(--color-white); }          /* 5.8:1 */
-.btn--primary:hover { background: var(--color-primary-hover); color: var(--color-white); }
-.btn--primary:active { background: var(--color-primary-active); }
-.btn--secondary { background: var(--color-white); border-color: var(--color-primary); color: var(--color-primary); }
-.btn--secondary:hover { background: var(--color-primary-soft); border-color: var(--color-primary-hover); color: var(--color-primary-hover); }
-.btn--secondary:active { background: color-mix(in srgb, var(--brand-vivid) 20%, #fff); }
-.btn--block { display: flex; width: 100%; }
-.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
+.nav{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-bottom:var(--space-3)}
+.nav button[aria-current="page"]{background:var(--color-heading);border-color:var(--color-heading);color:var(--color-white);box-shadow:inset 0 -4px 0 var(--brand-pink-medium)}
 
-.field { display: grid; gap: var(--space-2); }
-.field__label { font-weight: var(--weight-semibold); }
-.field__hint { font-size: var(--text-sm); color: var(--color-text-muted); }
+#chat-icono{position:fixed;right:var(--space-4);bottom:var(--space-4);z-index:var(--z-chat);min-height:3rem;padding:0 var(--space-4);border:2px solid var(--color-white);border-radius:var(--radius-pill);background:var(--color-primary);color:var(--color-white);box-shadow:var(--shadow-lg)}
+#chat-icono:hover,#chat-icono:active{background:var(--color-primary-hover);border-color:var(--color-white);color:var(--color-white)}
+#chat-icono:focus-visible{outline-color:var(--color-heading)}
 
-.input, .select {
-  width: 100%;
-  min-height: var(--touch-min);
-  padding: var(--space-2) var(--space-3);
-  border: 2px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  background: var(--color-white);
-  color: var(--color-text);
-  font: inherit;
-}
-.input:hover, .select:hover { border-color: var(--color-heading); }
-.input[aria-invalid="true"], .select[aria-invalid="true"] { border-color: var(--color-error); }
+/* 6. FORMULARIOS ----------------------------------------------------------- */
+input[type=text],input[type=password],select{display:block;width:100%;min-height:var(--touch-min);margin-bottom:var(--space-2);padding:var(--space-2) var(--space-3);border:2px solid var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-text);font:inherit}
+input[type=text]:hover,input[type=password]:hover,select:hover{border-color:var(--color-heading)}
+::placeholder{color:var(--color-text-muted);opacity:1}
+label{display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-min);cursor:pointer}
+input[type=checkbox]{flex:none;width:1.25rem;height:1.25rem;margin:0;accent-color:var(--color-primary)}
 
-/* 4. FILTROS Y ETIQUETAS --------------------------------------------------- */
-/* Barra de filtros: listas desplegables con <details>. Las opciones son
-   casillas nativas (multi-selección); el estado se ve con ✓ y relleno, no solo color. */
-.filterbar {
-  position: relative;
-  z-index: var(--z-dropdown);
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
-}
-.filterbar__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-3);
-  padding: var(--space-2) var(--space-4);
-}
-.filterbar__label { font-weight: var(--weight-bold); color: var(--color-heading); }
-.filterbar__reset { margin-inline-start: auto; }
+/* 7. TARJETAS, ETIQUETAS Y MENSAJES ---------------------------------------- */
+.card{margin-bottom:var(--space-3);padding:var(--space-4);border:2px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-white);box-shadow:var(--shadow-sm);transition:border-color var(--transition-fast),box-shadow var(--transition-fast)}
+.card>div{margin-top:var(--space-2)}
+.card>p{margin:var(--space-2) 0 0}
+.click{cursor:pointer}
+.click:hover{border-color:var(--color-primary);box-shadow:var(--shadow-md)}
+.item{display:flex;justify-content:space-between;gap:var(--space-3);padding:var(--space-2) 0;border-top:1px solid var(--color-border)}
+.item:first-child{border-top:0}
+.item b{color:var(--color-heading)}
+.mut{color:var(--color-text-muted);font-size:var(--text-sm)}
 
-.dropdown__toggle {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: var(--touch-min);
-  padding: 0 var(--space-4);
-  border: 2px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  background: var(--color-white);
-  color: var(--color-text);
-  font-weight: var(--weight-semibold);
-  list-style: none;
-  cursor: pointer;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
-}
-.dropdown__toggle::-webkit-details-marker { display: none; }
-.dropdown__toggle::after {
-  content: "";
-  width: 0.5rem;
-  height: 0.5rem;
-  margin: -0.25rem 0 0 var(--space-1);
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform var(--transition-fast);
-}
-.dropdown[open] > .dropdown__toggle::after { margin-top: 0.25rem; transform: rotate(225deg); }
-.dropdown__toggle:hover,
-.dropdown[open] > .dropdown__toggle { border-color: var(--color-primary); background: var(--color-primary-soft); }
-.dropdown:has(:checked) > .dropdown__toggle { border-color: var(--color-primary); color: var(--color-heading); }
-.dropdown:has(:checked) > .dropdown__toggle::before { content: "\2713"; font-weight: var(--weight-bold); }
+.estado{display:inline-flex;align-items:center;min-height:1.75rem;padding:0 var(--space-3);border:2px solid;border-radius:var(--radius-pill);font-size:var(--text-sm);font-weight:700}
+.estado--abierto{background:var(--color-success-soft);border-color:var(--color-success);color:var(--color-success)}
+.estado--cerrado{background:var(--color-bg-alt);border-color:var(--color-border-strong);color:var(--color-text-muted)}
+.chip{display:inline-flex;align-items:center;min-height:1.75rem;margin:0 var(--space-1) var(--space-1) 0;padding:0 var(--space-3);border-radius:var(--radius-pill);background:var(--color-primary-soft);color:var(--color-heading);font-size:var(--text-sm);font-weight:700}
 
-/* Móvil: el panel ocupa el ancho de la barra para no salirse de la pantalla */
-.dropdown__panel {
-  position: absolute;
-  top: 100%;
-  left: var(--space-3);
-  right: var(--space-3);
-  z-index: var(--z-dropdown);
-  max-height: min(60dvh, 24rem);
-  padding: var(--space-2);
-  overflow-y: auto;
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius-md);
-  background: var(--color-white);
-  box-shadow: var(--shadow-lg);
-}
-.dropdown__group { min-width: 0; margin: 0; padding: 0; border: 0; }
-.dropdown__list { display: grid; gap: var(--space-1); }
-.option {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: var(--touch-min);
-  padding: 0 var(--space-3);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-.option:hover { background: var(--color-primary-soft); }
-.option:has(.option__input:checked) { background: var(--color-primary-soft); font-weight: var(--weight-bold); }
-.option__input { flex: none; width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--color-primary); }
-
-@media (min-width: 48rem) {
-  .dropdown { position: relative; }
-  .dropdown__panel {
-    top: calc(100% + var(--space-1));
-    left: 0;
-    right: auto;
-    width: max-content;
-    min-width: 100%;
-    max-width: 22rem;
-  }
-  .dropdown__panel--wide { width: 30rem; max-width: calc(100vw - 2rem); }
-  .dropdown__list--cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.75rem;
-  padding: 0 var(--space-3);
-  border-radius: var(--radius-pill);
-  background: var(--color-primary-soft);
-  color: var(--color-heading);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-}
-.tag--accent { background: var(--brand-pink-medium); color: var(--color-text); }
-.tag--selected { background: var(--color-highlight); color: var(--color-white); }
-
-.message {
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-4);
-  border: 2px solid var(--color-border);
-  border-left: 6px solid var(--color-primary);
-  border-radius: var(--radius-md);
-  background: var(--color-white);
-}
-.message__title { font-weight: var(--weight-bold); color: var(--color-heading); }
-.message__text { font-size: var(--text-sm); color: var(--color-text-muted); }
-.message--error { border-color: var(--color-error); background: var(--color-error-bg); }
-.message__title--error { color: var(--color-error); }
-
-/* 5. ENCABEZADO Y NAVEGACIÓN ----------------------------------------------- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-header);
-  background: var(--color-heading);
-  border-bottom: 4px solid var(--color-highlight);
-}
-.site-header :focus-visible { outline-color: var(--color-white); }
-.site-header__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1) var(--space-5);
-  min-height: calc(var(--header-h) - 4px);
-  padding: var(--space-2) var(--space-4);
-}
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  color: var(--color-white);
-  font-family: var(--font-serif);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  text-decoration: none;
-}
-.brand:hover { color: var(--color-white); }
-.brand__mark {
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 3px solid var(--color-white);
-  border-radius: 50%;
-  background: var(--color-accent);
-}
-.nav { order: 3; flex-basis: 100%; }
-.nav__list { display: flex; flex-wrap: wrap; gap: var(--space-1); }
-.nav__link {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--touch-min);
-  padding: 0 var(--space-3);
-  border-bottom: 3px solid transparent;
-  color: var(--color-white);
-  font-weight: var(--weight-semibold);
-  text-decoration: none;
-}
-.nav__link:hover { background: color-mix(in srgb, var(--color-white) 16%, transparent); color: var(--color-white); }
-.nav__link[aria-current="page"] { border-bottom-color: var(--brand-pink-medium); font-weight: var(--weight-bold); }
-
-/* 6. SIDEBAR, TARJETAS DE TIANGUIS Y NEGOCIOS ------------------------------ */
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  border-top: 4px solid var(--color-primary);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: var(--color-bg-alt);
-}
-.sidebar__title { font-family: var(--font-serif); }
-.sidebar__intro, .sidebar__count { color: var(--color-text-muted); }
-
-.tianguis-list, .business-list { display: grid; gap: var(--space-3); }
-
-.tianguis-card {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-white);
-  box-shadow: var(--shadow-sm);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-.tianguis-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-md); }
-.tianguis-card--selected,
-.tianguis-card--selected:hover { border-color: var(--color-highlight); background: var(--color-highlight-soft); }
-.tianguis-card__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
-.tianguis-card__title { font-size: var(--text-lg); }
-.tianguis-card__place { color: var(--color-text-muted); font-weight: var(--weight-semibold); }
-
-.meta { display: grid; grid-template-columns: auto 1fr; gap: var(--space-1) var(--space-3); font-size: var(--text-sm); }
-.meta__term { font-weight: var(--weight-bold); color: var(--color-heading); }
-.meta__value { margin: 0; }
-
-.detail { display: grid; gap: var(--space-4); }
-.detail__title { font-family: var(--font-serif); font-size: var(--text-2xl); }
-
-.business-card {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-2);
-  padding: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-white);
-}
-.business-card__name { font-size: var(--text-lg); }
-.business-card__text { color: var(--color-text-muted); }
-
-/* 7. MAPA Y MARCADORES ----------------------------------------------------- */
-.map { position: relative; z-index: 0; min-height: var(--map-h-mobile); background: var(--color-bg-alt); }
-.map__canvas { position: absolute; inset: 0; }
-.map__placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: var(--space-5);
-  color: var(--color-text-muted);
-  text-align: center;
-}
-
-.legend {
-  --dot-size: 1.25rem;
-  position: absolute;
-  left: var(--space-3);
-  bottom: var(--space-3);
-  z-index: var(--z-map-ui);
-  max-width: calc(100% - var(--space-6));
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: rgb(255 255 255 / 0.96);
-  box-shadow: var(--shadow-md);
-}
-.legend__title { margin-bottom: var(--space-1); font-weight: var(--weight-bold); color: var(--color-heading); }
-.legend__list { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
-.legend__item { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
-.legend__cluster { flex: none; width: 1.75rem; height: 1.75rem; font-size: var(--text-sm); }
-
-/* Marcador de tianguis. El contenedor mide ≥44 px (área táctil);
-   el punto visible es más pequeño. No se fija position: lo gestiona Leaflet. */
-.marker {
-  display: grid;
-  place-items: center;
-  min-width: var(--touch-min);
-  min-height: var(--touch-min);
-  cursor: pointer;
-}
-.marker__dot {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: var(--dot-size, 1.75rem);
-  height: var(--dot-size, 1.75rem);
-  border: 3px solid var(--color-white);
-  border-radius: 50%;
-  background: var(--color-accent);   /* 6.2:1 contra el borde blanco */
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-.marker:hover .marker__dot { transform: scale(var(--hover-scale)); }
-
-/* Seleccionado: más grande, anillo Deep Violet y punto central (no solo color) */
-.marker--selected .marker__dot,
-.marker__dot--selected {
-  width: calc(var(--dot-size, 1.75rem) * 1.3);
-  height: calc(var(--dot-size, 1.75rem) * 1.3);
-  box-shadow: 0 0 0 3px var(--color-heading), var(--shadow-md);
-}
-.marker--selected .marker__dot::after,
-.marker__dot--selected::after {
-  content: "";
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: var(--color-white);
-}
-.marker:focus-visible { outline: none; }
-.marker:focus-visible .marker__dot { box-shadow: 0 0 0 3px var(--color-white), 0 0 0 6px var(--color-focus); }
-
-/* Grupo de marcadores cercanos */
-.cluster { display: grid; place-items: center; min-width: var(--touch-min); min-height: var(--touch-min); cursor: pointer; }
-.cluster__count {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  border: 3px solid var(--color-white);
-  border-radius: 50%;
-  background: var(--color-heading);
-  color: var(--color-white);
-  font-weight: var(--weight-bold);
-  box-shadow: var(--shadow-md);
-}
-
-/* 8. LAYOUT RESPONSIVE ----------------------------------------------------- */
-.layout { display: grid; grid-template-columns: minmax(0, 1fr); }
-
-/* Tableta (≥ 768 px): mapa arriba, tarjetas en dos columnas */
-@media (min-width: 48rem) {
-  .map { min-height: 60svh; }
-  .tianguis-list, .business-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .legend__list { flex-direction: column; }
-  .nav { order: 0; flex-basis: auto; }
-}
-
-/* Escritorio (≥ 1024 px): mapa y sidebar lado a lado, la sidebar se desplaza sola */
-@media (min-width: 64rem) {
-  body { display: flex; flex-direction: column; height: 100dvh; }
-  .layout { flex: 1; min-height: 0; grid-template-columns: minmax(0, 1fr) var(--sidebar-w); grid-template-rows: minmax(0, 1fr); }
-  .map { min-height: 0; }
-  .sidebar { overflow-y: auto; border-top: 0; border-radius: 0; border-left: 4px solid var(--color-primary); }
-  .tianguis-list, .business-list { grid-template-columns: minmax(0, 1fr); }
-}
-
-/* 9. INTEGRACIÓN CON LEAFLET (opcional) ------------------------------------
-   Cargar leaflet.css ANTES de este archivo para que estas reglas prevalezcan. */
-.map .leaflet-container { font-family: inherit; }
-.map .leaflet-bar a {
-  width: var(--touch-min);
-  height: var(--touch-min);
-  line-height: var(--touch-min);
-  color: var(--color-heading);
-  font-weight: var(--weight-bold);
-}
-  </style>
+#aviso{margin:0 0 var(--space-3)}
+#aviso:empty{margin:0}
+#aviso:not(:empty){padding:var(--space-3) var(--space-4);border:2px solid var(--color-border);border-left:6px solid var(--color-primary);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-text)}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#mapa">Saltar al mapa</a>
-  <a class="skip-link" href="#lista">Saltar a la lista de tianguis</a>
+<div class="layout">
+  <div id="mapa-panel" role="region" aria-label="Mapa de negocios"></div>
+  <div class="contenido">
+    <h1>Mercadopolis</h1>
+    <div id="app"></div>
 
-  <header class="site-header">
-    <div class="site-header__inner">
-      <a class="brand" href="#"><span class="brand__mark" aria-hidden="true"></span>Tianguis CDMX</a>
-      <nav class="nav" aria-label="Principal">
-        <ul class="nav__list" role="list">
-          <li><a class="nav__link" href="#" aria-current="page">Mapa</a></li>
-          <li><a class="nav__link" href="#">Tianguis</a></li>
-          <li><a class="nav__link" href="#">Negocios</a></li>
-          <li><a class="nav__link" href="#">Ayuda</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+    <footer>
+      <h3>Gracias por apoyar a los comerciantes mexicanos</h3>
+      <h4>Con el apoyo de todos podemos progresar para un mejor futuro</h4>
+    </footer>
+  </div>
+</div>
 
-  <form class="filterbar" aria-label="Filtros de tianguis">
-    <div class="filterbar__inner">
-      <span class="filterbar__label">Filtrar por</span>
+<button id="chat-icono" onclick="alert('espuro adorno mamon')">
+  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  Chadbot
+</button>
 
-      <details class="dropdown">
-        <summary class="dropdown__toggle">Categoría comercial</summary>
-        <div class="dropdown__panel">
-          <fieldset class="dropdown__group">
-            <legend class="sr-only">Categoría comercial</legend>
-            <ul class="dropdown__list" role="list">
-              <li><label class="option"><input class="option__input" type="checkbox" name="categoria" value="alimentos"><span>Alimentos</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="categoria" value="ropa"><span>Ropa</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="categoria" value="calzado"><span>Calzado</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="categoria" value="hogar"><span>Hogar</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="categoria" value="artesanias"><span>Artesanías</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="categoria" value="tecnologia"><span>Tecnología</span></label></li>
-            </ul>
-          </fieldset>
-        </div>
-      </details>
+<script>
+const API='';
 
-      <details class="dropdown">
-        <summary class="dropdown__toggle">Alcaldía</summary>
-        <div class="dropdown__panel dropdown__panel--wide">
-          <fieldset class="dropdown__group">
-            <legend class="sr-only">Alcaldía</legend>
-            <ul class="dropdown__list dropdown__list--cols" role="list">
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="alvaro-obregon"><span>Álvaro Obregón</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="azcapotzalco"><span>Azcapotzalco</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="benito-juarez"><span>Benito Juárez</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="coyoacan"><span>Coyoacán</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="cuajimalpa"><span>Cuajimalpa de Morelos</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="cuauhtemoc"><span>Cuauhtémoc</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="gustavo-a-madero"><span>Gustavo A. Madero</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="iztacalco"><span>Iztacalco</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="iztapalapa"><span>Iztapalapa</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="magdalena-contreras"><span>La Magdalena Contreras</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="miguel-hidalgo"><span>Miguel Hidalgo</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="milpa-alta"><span>Milpa Alta</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="tlahuac"><span>Tláhuac</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="tlalpan"><span>Tlalpan</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="venustiano-carranza"><span>Venustiano Carranza</span></label></li>
-              <li><label class="option"><input class="option__input" type="checkbox" name="alcaldia" value="xochimilco"><span>Xochimilco</span></label></li>
-            </ul>
-          </fieldset>
-        </div>
-      </details>
+const ALCALDIAS=['Álvaro Obregón','Azcapotzalco','Benito Juárez','Coyoacán','Cuajimalpa de Morelos','Cuauhtémoc','Gustavo A. Madero','Iztacalco','Iztapalapa','La Magdalena Contreras','Miguel Hidalgo','Milpa Alta','Tláhuac','Tlalpan','Venustiano Carranza','Xochimilco'];
+const CATEGORIAS=['Alimentos','Florería/Plantas','Ropa','Accesorios/Moda','Papelería','Tecnología','Artesanías','Música','Chácharas'];
+const PAGOS=['Efectivo','Tarjeta','Transferencia','Mercado Pago','Criptos'];
 
-      <button class="btn btn--secondary filterbar__reset" type="reset">Limpiar filtros</button>
-    </div>
-  </form>
+let NEGOCIOS=[
+ {id:1,nombre:'Tacos Mr Uriel',registrado:true,Categoria:'Alimentos',alcaldia:'Cuauhtémoc',tianguis:'Tianguis del Domingo, Av. Reforma',maps:'',pagos:['Efectivo','Criptos'],
+  horario:[{dias:[0,6],llegada:'07:00',salida:'15:00'}],
+  productos:[{nombre:'Taco de pastor',precio:150},{nombre:'Agua de horchata el Vic',precio:200}]},
+ {id:2,nombre:'Frutas y Verduras Don Rocky',registrado:false,Categoria:'Alimentos',alcaldia:'Coyoacán',tianguis:'Tianguis de los Miércoles, Col. Centro',maps:'',pagos:['Efectivo','Tarjeta','Mercado Pago','Organos','Criptos'],
+  horario:[{dias:[3,5],llegada:'06:00',salida:'14:00'}],
+  productos:[{nombre:'El tripi',precio:22},{nombre:'Aguacate (kg)',precio:65}]}
+];
 
-  <main class="layout">
-    <section class="map" id="mapa" aria-label="Mapa de tianguis" tabindex="-1">
-      <!-- Elimina este párrafo cuando conectes la biblioteca de mapas -->
-      <p class="map__placeholder">Aquí se mostrará el mapa interactivo de la Ciudad de México.</p>
-      <div class="map__canvas" id="map"></div>
+let token=null;
+try{token=localStorage.getItem('token')}catch(e){}
 
-      <div class="legend" role="group" aria-labelledby="leyenda-titulo">
-        <p class="legend__title" id="leyenda-titulo">Leyenda</p>
-        <ul class="legend__list" role="list">
-          <li class="legend__item"><span class="marker__dot" aria-hidden="true"></span>Un tianguis</li>
-          <li class="legend__item"><span class="marker__dot marker__dot--selected" aria-hidden="true"></span>Tianguis seleccionado</li>
-          <li class="legend__item"><span class="cluster__count legend__cluster" aria-hidden="true">8</span>Varios tianguis juntos</li>
-        </ul>
-      </div>
-    </section>
+async function api(ruta,op={}){
+  const r=await fetch(API+ruta,{...op,headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...(op.headers||{})}});
+  if(!r.ok){let m='Error '+r.status;try{m=(await r.json()).error||m}catch(e){}throw new Error(m)}
+  return r.json();
+}
+async function cargar(){
+  if(!API){render();return}
+  try{NEGOCIOS=await api('/negocios')}catch(e){msg='No se pudo conectar con el servidor; se muestran datos de ejemplo.'}
+  render();
+}
 
-    <aside class="sidebar" id="lista" aria-labelledby="sidebar-titulo" tabindex="-1">
-      <div>
-        <h1 class="sidebar__title" id="sidebar-titulo">Tianguis de la Ciudad de México</h1>
-        <p class="sidebar__intro">Elige un tianguis para ver los negocios que tiene.</p>
-      </div>
+const DIAS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const CORTO=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+Number(n).toLocaleString('es-MX');
+const min=t=>{const [h,m]=t.split(':');return +h*60+ +m};
 
-      <div class="message">
-        <p class="message__title">Datos de demostración</p>
-        <p class="message__text">Los tianguis de esta lista son ejemplos para probar el diseño. No son ubicaciones reales.</p>
-      </div>
+function estado(n){
+  const hor=n.horario||[],now=new Date(),d=now.getDay(),m=now.getHours()*60+now.getMinutes();
+  for(const h of hor)if(h.dias.includes(d)&&min(h.llegada)<=m&&m<min(h.salida))return{open:true,txt:'cierra a las '+h.salida};
+  for(let off=0;off<=7;off++){
+    const dd=(d+off)%7;let best=null;
+    for(const h of hor)if(h.dias.includes(dd)&&(off>0||min(h.llegada)>m)&&(!best||min(h.llegada)<min(best.llegada)))best=h;
+    if(best)return{open:false,txt:'abre '+(off===0?'hoy':off===1?'mañana':DIAS[dd])+' a las '+best.llegada};
+  }
+  return{open:false,txt:'sin horario'};
+}
+const badge=n=>{const e=estado(n);return `<span class="estado ${e.open?'estado--abierto':'estado--cerrado'}">${e.open?'ABIERTO':'CERRADO'}</span> <span class="mut">(${e.txt})</span>`};
+const info=n=>`<div class="mut">${esc(n.Categoria)} · ${esc(n.alcaldia)} · ${n.registrado?'Registrado':'Sin registrar'}</div>`;
+const mapsUrl=n=>/^https?:\/\//i.test(n.maps||'')?n.maps:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(n.tianguis||'');
+const pagos=n=>(n.pagos||[]).map(p=>`<span class="chip">${esc(p)}</span>`).join('')||'<span class="mut">No especificado</span>';
+const opts=(lista,val,ph)=>`<option value="">${ph}</option>`+lista.map(x=>`<option value="${esc(x)}" ${x===val?'selected':''}>${esc(x)}</option>`).join('');
+const val=id=>((document.getElementById(id)||{}).value||'').trim();
 
-      <p class="sidebar__count" role="status">Mostrando 3 tianguis de ejemplo</p>
+let vista='lista',sel=null,q='',solo=false,cat='',alc='',authReg=false,mio,msg='',mapaHtml='';
+const app=document.getElementById('app');
+const aviso=t=>{const a=document.getElementById('aviso');if(a)a.textContent=t};
 
-      <ul class="tianguis-list" role="list">
-        <li>
-          <!-- Estado "seleccionado": solo muestra el estilo; la lógica aún no está conectada -->
-          <article class="tianguis-card tianguis-card--selected" aria-current="true">
-            <div class="tianguis-card__head">
-              <h2 class="tianguis-card__title" id="t1">Tianguis de ejemplo A</h2>
-              <span class="tag tag--selected">Seleccionado</span>
-            </div>
-            <p class="tianguis-card__place">Coyoacán</p>
-            <dl class="meta">
-              <dt class="meta__term">Días</dt><dd class="meta__value">Sábado y domingo</dd>
-              <dt class="meta__term">Horario</dt><dd class="meta__value">8:00 a 16:00</dd>
-              <dt class="meta__term">Negocios</dt><dd class="meta__value">42 registrados</dd>
-            </dl>
-            <button class="btn btn--secondary" type="button" aria-describedby="t1">Ver detalles</button>
-          </article>
-        </li>
-        <li>
-          <article class="tianguis-card">
-            <div class="tianguis-card__head"><h2 class="tianguis-card__title" id="t2">Tianguis de ejemplo B</h2></div>
-            <p class="tianguis-card__place">Iztapalapa</p>
-            <dl class="meta">
-              <dt class="meta__term">Días</dt><dd class="meta__value">Miércoles</dd>
-              <dt class="meta__term">Horario</dt><dd class="meta__value">9:00 a 17:00</dd>
-              <dt class="meta__term">Negocios</dt><dd class="meta__value">118 registrados</dd>
-            </dl>
-            <button class="btn btn--secondary" type="button" aria-describedby="t2">Ver detalles</button>
-          </article>
-        </li>
-        <li>
-          <article class="tianguis-card">
-            <div class="tianguis-card__head"><h2 class="tianguis-card__title" id="t3">Tianguis de ejemplo C</h2></div>
-            <p class="tianguis-card__place">Tlalpan</p>
-            <dl class="meta">
-              <dt class="meta__term">Días</dt><dd class="meta__value">Domingo</dd>
-              <dt class="meta__term">Horario</dt><dd class="meta__value">8:00 a 15:00</dd>
-              <dt class="meta__term">Negocios</dt><dd class="meta__value">27 registrados</dd>
-            </dl>
-            <button class="btn btn--secondary" type="button" aria-describedby="t3">Ver detalles</button>
-          </article>
-        </li>
-      </ul>
-    </aside>
-  </main>
+function nav(){
+  return `<div class="nav"><button onclick="ir('lista')" ${vista==='lista'?'aria-current="page"':''}>Negocios</button>
+  <button onclick="ir(token?'mio':'auth')" ${vista!=='lista'?'aria-current="page"':''}>${token?'Mi negocio':'Soy vendedor'}</button>
+  ${token?'<button onclick="salir()">Salir</button>':''}</div><p id="aviso" class="mut" role="status">${esc(msg)}</p>`;
+}
+function ir(v){vista=v;sel=null;msg='';if(v==='mio')cargarMio();else render()}
+function salir(){token=null;try{localStorage.removeItem('token')}catch(e){}ir('lista')}
 
-  <!-- Plantillas para tu JS (no se muestran). Copia su contenido dentro de <body> para revisar estilos. -->
-  <template id="tpl-detalle">
-    <section class="detail" aria-labelledby="detalle-titulo">
-      <button class="btn btn--secondary" type="button">← Volver al listado</button>
-      <div>
-        <h2 class="detail__title" id="detalle-titulo">Tianguis de ejemplo A</h2>
-        <p class="tianguis-card__place">Coyoacán</p>
-      </div>
-      <h3>Negocios (2)</h3>
-      <ul class="business-list" role="list">
-        <li>
-          <article class="business-card">
-            <h4 class="business-card__name">Negocio de ejemplo 1</h4>
-            <span class="tag">Alimentos</span>
-            <p class="business-card__text">Descripción breve, si existe.</p>
-            <p class="business-card__text">Ubicación: pasillo 3</p>
-          </article>
-        </li>
-        <li>
-          <article class="business-card">
-            <h4 class="business-card__name">Negocio de ejemplo 2</h4>
-            <span class="tag">Artesanías</span>
-          </article>
-        </li>
-      </ul>
-    </section>
-  </template>
+function filtrados(){
+  const t=q.trim().toLowerCase();
+  return NEGOCIOS.map((n,i)=>[n,i]).filter(([n])=>
+    (!t||(n.nombre+' '+n.tianguis).toLowerCase().includes(t))&&
+    (!solo||estado(n).open)&&
+    (!cat||n.Categoria===cat)&&
+    (!alc||n.alcaldia===alc));
+}
+function lista(){
+  return filtrados().map(([n,i])=>`<div class="card click" role="button" tabindex="0" onclick="sel=${i};render()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();sel=${i};render()}"><h3>${esc(n.nombre)}</h3>
+    ${info(n)}<div>${badge(n)}</div><div class="mut">Tianguis: ${esc(n.tianguis)}</div><div style="margin-top:6px">${pagos(n)}</div></div>`).join('')||'<p class="mut">No hay negocios con ese filtro.</p>';
+}
+function mapaNuevo(){
+  const ph=t=>`<p class="mut" style="padding:12px;text-align:center">${t}</p>`;
+  if(!API)return ph('Aquí va el pinche mapa culeros.');
+  let ruta;
+  if(vista==='lista'&&sel!==null&&NEGOCIOS[sel]&&NEGOCIOS[sel].id!=null)ruta='/negocios/'+encodeURIComponent(NEGOCIOS[sel].id)+'/mapa';
+  else{
+    const base=vista==='lista'?filtrados():NEGOCIOS.map((n,i)=>[n,i]);
+    const ids=base.map(([n])=>n.id).filter(x=>x!=null);
+    if(!ids.length)return ph('No hay negocios para mostrar en el mapa.');
+    ruta='/mapa?ids='+ids.map(encodeURIComponent).join(',');
+  }
+  return `<img alt="Mapa de negocios" src="${esc(API+ruta)}" onerror="this.replaceWith(document.createTextNode('No se pudo cargar el mapa.'))">`;
+}
+function actMapa(){const h=mapaNuevo();if(h===mapaHtml)return;mapaHtml=h;document.getElementById('mapa-panel').innerHTML=h}
+function act(){document.getElementById('lista').innerHTML=lista();actMapa()}
+function vLista(){
+  return `<input type="text" id="q" placeholder="Buscar negocio o tianguis" aria-label="Buscar negocio o tianguis" value="${esc(q)}">
+  <select id="cat" aria-label="Categoría comercial">${opts(CATEGORIAS,cat,'Todas las categorías')}</select>
+  <select id="alc" aria-label="Alcaldía">${opts(ALCALDIAS,alc,'Todas las alcaldías')}</select>
+  <label><input type="checkbox" id="solo" ${solo?'checked':''}> Solo abiertos ahora</label>
+  <div id="lista">${lista()}</div>`;
+}
+function bindLista(){
+  document.getElementById('cat').onchange=e=>{cat=e.target.value;act()};
+  document.getElementById('alc').onchange=e=>{alc=e.target.value;act()};
+  document.getElementById('q').oninput=e=>{q=e.target.value;act()};
+  document.getElementById('solo').onchange=e=>{solo=e.target.checked;act()};
+}
 
-  <template id="tpl-mensajes">
-    <div class="message" role="status">
-      <p class="message__title">No hay tianguis con estos filtros</p>
-      <p class="message__text">Quita algún filtro o usa “Limpiar filtros” para ver todos.</p>
-    </div>
-    <div class="message message--error" role="alert">
-      <p class="message__title message__title--error">No pudimos cargar los tianguis</p>
-      <p class="message__text">Revisa tu conexión e inténtalo de nuevo.</p>
-    </div>
-  </template>
-  <script>
-    // Solo abre y cierra las listas desplegables. El filtrado de datos aún no está implementado.
-    (function () {
-      var dropdowns = document.querySelectorAll('.dropdown');
-      dropdowns.forEach(function (d) {
-        d.addEventListener('toggle', function () {
-          if (d.open) dropdowns.forEach(function (o) { if (o !== d) o.open = false; });
-        });
-      });
-      document.addEventListener('click', function (e) {
-        dropdowns.forEach(function (d) { if (d.open && !d.contains(e.target)) d.open = false; });
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key !== 'Escape') return;
-        dropdowns.forEach(function (d) {
-          if (d.open) { d.open = false; d.querySelector('summary').focus(); }
-        });
-      });
-    })();
-  </script>
+function vDetalle(n){
+  return `<button onclick="sel=null;render()">Volver</button>
+  <div class="card" style="margin-top:10px"><h3>${esc(n.nombre)}</h3>${info(n)}<div>${badge(n)}</div>
+    <p>Tianguis: <b>${esc(n.tianguis)}</b></p>
+    <a class="btn" href="${esc(mapsUrl(n))}" target="_blank" rel="noopener">Ver en Google Maps</a></div>
+  <div class="card"><h2>Horario</h2>${(n.horario||[]).map(h=>`<div class="item"><span>${h.dias.map(d=>CORTO[d]).join(', ')}</span><span>${esc(h.llegada)} a ${esc(h.salida)}</span></div>`).join('')||'<span class="mut">Sin horario</span>'}</div>
+  <div class="card"><h2>Productos</h2>${(n.productos||[]).map(p=>`<div class="item"><span>${esc(p.nombre)}</span><b>${money(p.precio)}</b></div>`).join('')||'<span class="mut">Sin productos</span>'}</div>
+  <div class="card"><h2>Formas de pago</h2>${pagos(n)}</div>`;
+}
+
+function vAuth(){
+  return `<div class="card"><h2>${authReg?'Crear cuenta de vendedor':'Entrar como vendedor'}</h2>
+  ${authReg?'<input type="text" id="a_nom" placeholder="Nombre del negocio" aria-label="Nombre del negocio">':''}
+  <input type="text" id="a_mail" placeholder="Correo" aria-label="Correo" autocomplete="email">
+  <input type="password" id="a_pass" placeholder="Contraseña (mínimo 8 caracteres)" aria-label="Contraseña (mínimo 8 caracteres)" autocomplete="${authReg?'new-password':'current-password'}">
+  <button class="btn btn--primary" onclick="enviarAuth()">${authReg?'Registrarme':'Entrar'}</button>
+  <button onclick="authReg=!authReg;render()">${authReg?'Ya tengo cuenta':'No tengo cuenta'}</button></div>`;
+}
+async function enviarAuth(){
+  if(!API){aviso('Configura la constante API para usar cuentas.');return}
+  const body=authReg?{correo:val('a_mail'),password:document.getElementById('a_pass').value,nombre:val('a_nom')}
+                    :{correo:val('a_mail'),password:document.getElementById('a_pass').value};
+  try{
+    const r=await api(authReg?'/auth/registro':'/auth/login',{method:'POST',body:JSON.stringify(body)});
+    token=r.token;try{localStorage.setItem('token',token)}catch(e){}
+    ir('mio');
+  }catch(e){aviso(e.message)}
+}
+
+async function cargarMio(){
+  mio=undefined;render();
+  if(!API){mio={};render();return}
+  try{mio=await api('/negocios/mio')}catch(e){mio={}}
+  render();
+}
+function vMio(){
+  const m=mio||{};
+  return `<div class="card"><h2>Mi negocio</h2>
+  <input type="text" id="m_nombre" placeholder="Nombre del negocio" aria-label="Nombre del negocio" value="${esc(m.nombre)}">
+  <select id="m_cat" aria-label="Categoría">${opts(CATEGORIAS,m.Categoria,'Categoría')}</select>
+  <select id="m_alc" aria-label="Alcaldía">${opts(ALCALDIAS,m.alcaldia,'Alcaldía')}</select>
+  <input type="text" id="m_tian" placeholder="Tianguis y dirección" aria-label="Tianguis y dirección" value="${esc(m.tianguis)}">
+  <input type="text" id="m_maps" placeholder="Link de Google Maps (opcional)" aria-label="Link de Google Maps (opcional)" value="${esc(m.maps)}">
+  <div>${PAGOS.map(p=>`<label><input type="checkbox" class="m_pago" value="${p}" ${(m.pagos||[]).includes(p)?'checked':''}> ${p}</label>`).join('')}</div>
+  <button class="btn btn--primary" onclick="guardarMio()">Guardar</button></div>`;
+}
+async function guardarMio(){
+  const body={nombre:val('m_nombre'),Categoria:val('m_cat'),alcaldia:val('m_alc'),tianguis:val('m_tian'),maps:val('m_maps'),
+    pagos:[...document.querySelectorAll('.m_pago:checked')].map(x=>x.value)};
+  if(!body.nombre){aviso('Pon el nombre del negocio.');return}
+  if(!API){aviso('Configura la constante API para guardar.');return}
+  try{
+    mio=await api('/negocios/mio',{method:'PUT',body:JSON.stringify(body)});
+    NEGOCIOS=await api('/negocios');
+    aviso('Guardado.');
+  }catch(e){aviso(e.message)}
+}
+
+function render(){
+  if(sel!==null&&!NEGOCIOS[sel])sel=null;
+  let html=nav(),bind=()=>{};
+  if(vista==='auth')html+=vAuth();
+  else if(vista==='mio')html+=mio===undefined?'<p class="mut">Cargando...</p>':vMio();
+  else if(sel!==null)html+=vDetalle(NEGOCIOS[sel]);
+  else{html+=vLista();bind=bindLista}
+  app.innerHTML=html;bind();actMapa();
+}
+cargar();
+</script>
 </body>
 </html>
