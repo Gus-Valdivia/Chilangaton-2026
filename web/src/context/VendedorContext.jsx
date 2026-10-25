@@ -1,20 +1,22 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import {
+    loginReq,
+    registerReq,
+    logoutReq,
+    verifyTokenReq,
+} from "../api/vendedor.js";
 
-const AuthContext = createContext();
+const VendedorContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const VendedorProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Valida la cookie al cargar la app (requiere endpoint /me en el backend)
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await fetch("/api/auth/me"); // Asegúrate de tener este endpoint
-                if (res.ok) {
-                    const data = await res.json();
-                    setUser(data.user);
-                }
+                const { data } = await verifyTokenReq();
+                setUser(data.user);
             } catch (error) {
                 setUser(null);
             } finally {
@@ -25,42 +27,28 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (credentials) => {
-        const res = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(credentials),
-        });
-        if (res.ok) {
-            const data = await res.json();
-            setUser(data.user);
-        }
-        return res;
+        const { data } = await loginReq(credentials);
+        setUser(data.user);
+        return data;
     };
 
     const register = async (userData) => {
-        const res = await fetch("/api/auth/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData),
-        });
-        if (res.ok) {
-            const data = await res.json();
-            setUser(data.user);
-        }
-        return res;
+        const { data } = await registerReq(userData);
+        setUser(data.user);
+        return data;
     };
 
     const logout = async () => {
-        await fetch("/api/auth/logout", { method: "POST" });
+        await logoutReq();
         setUser(null);
     };
 
     return (
-        <AuthContext.Provider
+        <VendedorContext.Provider
             value={{ user, loading, login, register, logout }}
         >
             {children}
-        </AuthContext.Provider>
+        </VendedorContext.Provider>
     );
 };
 
