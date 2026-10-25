@@ -188,7 +188,7 @@ export default function Landing() {
             </div>
 
             <button
-                onClick={() => alert("espuro adorno mamon")}
+                onClick={() => alert("Proximamente")}
                 className="fixed right-4 bottom-4 z-50 flex items-center gap-2 min-h-[3rem] px-4 border-2 border-white rounded-full bg-[#8F00FF] text-white font-bold shadow-[0_8px_24px_rgb(36_26_45/0.18)] cursor-pointer transition-colors hover:bg-[#6b00bf] hover:border-white hover:text-white focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#4B0082]"
             >
                 <svg
@@ -204,7 +204,7 @@ export default function Landing() {
                 >
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                 </svg>
-                Chadbot
+                Chatbot
             </button>
         </div>
     );
