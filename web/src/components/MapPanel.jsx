@@ -12,7 +12,7 @@ export const MapPanel = ({ vista, sel, negocios }) => {
         if (vista === "lista" && sel && sel.id != null) {
             ruta = `/negocios/${encodeURIComponent(sel.id)}/mapa`;
         } else {
-            const ids = negocios.map((n) => n.id).filter((x) => x != null);
+            const ids = negocios?.map((n) => n.id).filter((x) => x != null);
             if (ids.length)
                 ruta = `/mapa?ids=${ids.map(encodeURIComponent).join(",")}`;
         }

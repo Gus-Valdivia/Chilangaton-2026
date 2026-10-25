@@ -13,10 +13,10 @@ import {
 
 export const BusinessList = ({ negocios, onSelect }) => (
     <div>
-        {negocios.length === 0 ? (
+        {negocios?.length === 0 ? (
             <p className="text-[#62586B]">No hay negocios con ese filtro.</p>
         ) : null}
-        {negocios.map((n) => (
+        {negocios?.map((n) => (
             <Card key={n.id} clickable onClick={() => onSelect(n)}>
                 <h3 className="m-0 mb-1 text-[#4B0082] font-serif font-bold text-lg leading-tight">
                     {n.nombre}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { CATEGORIAS, ALCALDIAS } from "../utils/constants";
-import { fetchLocals } from "../api/establecimientos";
-import { verifyTokenReq } from "../api/auth"; // Asumiendo tu auth con axios
+import { CATEGORIAS, ALCALDIAS } from "../utils/constants.js";
+import { fetchLocals } from "../api/establecimiento.js";
+import { verifyTokenReq } from "../api/vendedor.js"; // Asumiendo tu auth con axios
 import { MapPanel } from "../components/MapPanel";
 import { Button, Input, Select } from "../components/UI";
 import {
@@ -57,16 +57,18 @@ export default function Landing() {
         changeView("lista");
     };
 
-    const filteredNegocios = negocios.filter((n) => {
-        const matchQ =
-            !q ||
-            (n.nombre + " " + n.tianguis)
-                .toLowerCase()
-                .includes(q.toLowerCase());
-        const matchCat = !cat || n.Categoria === cat;
-        const matchAlc = !alc || n.alcaldia === alc;
-        return matchQ && matchCat && matchAlc;
-    });
+    const filteredNegocios = negocios?.lenght
+        ? negocios?.filter((n) => {
+              const matchQ =
+                  !q ||
+                  (n.nombre + " " + n.tianguis)
+                      .toLowerCase()
+                      .includes(q.toLowerCase());
+              const matchCat = !cat || n.Categoria === cat;
+              const matchAlc = !alc || n.alcaldia === alc;
+              return matchQ && matchCat && matchAlc;
+          })
+        : [];
 
     return (
         <div className="flex flex-col md:flex-row-reverse min-h-screen bg-[#F8F6FB] text-[#241A2D] font-sans">

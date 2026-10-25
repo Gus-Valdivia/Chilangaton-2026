@@ -1,4 +1,4 @@
-import api from "../lib/axios";
+import api from "./axios";
 
 export const fetchTianguis = () => api.get("/establecimientos/get-tianguis");
 export const fetchMercados = () => api.get("/establecimientos/get-mercados");
